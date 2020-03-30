@@ -90,6 +90,7 @@ void destroy_Stack(Stack *stack)
     stack->size = 0;
 }
 
+/*
 int main() 
 {
     Stack *s1;
@@ -138,4 +139,4 @@ int main()
     
     return 0;
 }
-
+*/
