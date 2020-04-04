@@ -5,13 +5,13 @@ typedef struct
     int size;
 } Stack;
 
-Stack *create_Stack(int size);
+Stack *create_stack(int size);
 
 void push(Stack *stack, int value);
 
 int pop(Stack *stack);
 
-void destroy_Stack(Stack *stack);
+void destroy_stack(Stack *stack);
 
 int size(Stack *stack);
 
