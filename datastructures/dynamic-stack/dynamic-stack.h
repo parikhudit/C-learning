@@ -1,17 +1,21 @@
 #include<stdbool.h>
 
+#ifndef DATATYPE
+    #define DATATYPE int
+#endif
+
 typedef struct
 {
-    int *item;
+    DATATYPE *item;
     int top;
     int size;
 } Stack;
 
 Stack *create_stack(int size);
 
-int push(Stack *stack, int value);
+bool push(Stack *stack, DATATYPE value);
 
-int pop(Stack *stack);
+DATATYPE pop(Stack *stack);
 
 void destroy_stack(Stack *stack);
 
@@ -21,4 +25,4 @@ bool isOverflow(Stack *stack);
 
 bool isUnderflow(Stack *stack);
 
-int stackTop(Stack *stack);
+DATATYPE stackTop(Stack *stack);

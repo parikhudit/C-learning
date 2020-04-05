@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include "dynamic-stack.h"
 
+#define STR(x)   #x
+#define SHOW_DEFINE(x) printf("%s=%s\n", #x, STR(x))
 
 bool isOverflow(Stack *sp)
 {
@@ -20,17 +22,17 @@ int size(Stack *stack)
     return stack->size;
 }
 
-int push(Stack *stack, int value)
+bool push(Stack *stack, DATATYPE value)
 {
     if (isOverflow(stack) == true)
     {
-        int *temp;
-        temp = (int *)malloc(sizeof(int) * stack->size * 2);
+        DATATYPE *temp;
+        temp = (DATATYPE *)malloc(sizeof(DATATYPE) * stack->size * 2);
 
         if (temp == NULL)
 	{
             printf("Stack overflow\n");
-            return INT_MIN;;
+            return false;
         }
 
         for (int i = 0; i <= stack->top; i++)
@@ -41,32 +43,35 @@ int push(Stack *stack, int value)
         free(stack->item);
         stack->item = temp;
         stack->size *= 2;
-        
     }
     
     stack->top++;
     stack->item[stack->top] = value;
-    return 1;
+    return true;
 }
 
-int pop(Stack *stack)
+DATATYPE pop(Stack *stack)
 {
     if (isUnderflow(stack) == true)
     {
         printf("Stack Underflow\n");
-        return INT_MIN;
+        return EOF;
     }
 
-    int value = stack->item[stack->top];
+    DATATYPE value = stack->item[stack->top];
     stack->top--;
     return value;
 }
 
-int stackTop(Stack *stack)
+DATATYPE stackTop(Stack *stack)
 {
     if (isUnderflow(stack) == true)
     {
-        return INT_MIN; 
+        #if DATATYPE == char
+        return EOF;
+        #else
+        return INT_MIN;
+        #endif
     }
 
     return stack->item[stack->top];
@@ -77,7 +82,7 @@ Stack *create_stack(int size)
     Stack *stack;
     stack = (Stack *)malloc(sizeof(Stack) * size);
     stack->top = -1;
-    stack->item = (int *)malloc(sizeof(int) * size);
+    stack->item = (DATATYPE *)malloc(sizeof(DATATYPE) * size);
 
     if (stack->item == NULL)
     {
@@ -94,9 +99,8 @@ void destroy_stack(Stack *stack)
     if (stack->item != NULL)
     {
         free(stack->item);
+        stack->item = NULL;
     }
     free(stack);
-
-    stack->top = -1;
-    stack->size = 0;
+    stack = NULL;
 }

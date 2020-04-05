@@ -11,34 +11,50 @@ int main()
 
     if (s1 == NULL)
     {
-        return INT_MIN;
+        return 0;
     }
     
     printf("1. Push\n");
     printf("2. Pop\n");
     printf("3. Exit\n");
-    int choice, value;
+    int choice;
+    #if DATATYPE == char
+    char value;
+    #else
+    int value;
+    #endif
     
     while (true)
     {
-        printf("Enter choice: ");
+        printf("\nEnter choice: ");
         scanf("%d", &choice);
-        // printf("Size of Stack: %d\n", size(s1));
 
         switch (choice)
-	{
+        {
             case 1: 
                 printf("Enter value: ");
+                #if DATATYPE == char
+                scanf(" %c", &value);
+                #else
                 scanf("%d", &value);
+                #endif
                 push(s1, value); 
                 break;
 
             case 2:
-                value = pop(s1);
                 if (isUnderflow(s1) == false)
 		{
+                    value = pop(s1);
+                    #if DATATYPE == char
+                    printf("Popped data: %c\n", value);
+                    #else
                     printf("Popped data: %d\n", value);
-                }    
+                    #endif
+                }
+                else
+                {
+                    printf("Stack is empty");
+                }
                 break;
 
             case 3:
@@ -50,5 +66,5 @@ int main()
         }
     }
     
-    return 0;
+    return 1;
 }
