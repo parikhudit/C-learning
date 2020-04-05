@@ -5,12 +5,12 @@
 #include "dynamic-stack.h"
 
 
-int isOverflow(Stack *sp)
+bool isOverflow(Stack *sp)
 {
     return sp->top == sp->size - 1;
 }
 
-int isUnderflow(Stack *sp)
+bool isUnderflow(Stack *sp)
 {
     return sp->top == -1;
 }
@@ -20,7 +20,7 @@ int size(Stack *stack)
     return stack->size;
 }
 
-void push(Stack *stack, int value)
+int push(Stack *stack, int value)
 {
     if (isOverflow(stack) == true)
     {
@@ -30,7 +30,7 @@ void push(Stack *stack, int value)
         if (temp == NULL)
 	{
             printf("Stack overflow\n");
-            return;
+            return INT_MIN;;
         }
 
         for (int i = 0; i <= stack->top; i++)
@@ -46,6 +46,7 @@ void push(Stack *stack, int value)
     
     stack->top++;
     stack->item[stack->top] = value;
+    return 1;
 }
 
 int pop(Stack *stack)
@@ -61,7 +62,17 @@ int pop(Stack *stack)
     return value;
 }
 
-Stack *create_Stack(int size)
+int stackTop(Stack *stack)
+{
+    if (isUnderflow(stack) == true)
+    {
+        return INT_MIN; 
+    }
+
+    return stack->item[stack->top];
+}
+
+Stack *create_stack(int size)
 {
     Stack *stack;
     stack = (Stack *)malloc(sizeof(Stack) * size);
@@ -78,7 +89,7 @@ Stack *create_Stack(int size)
     return stack;
 }
 
-void destroy_Stack(Stack *stack)
+void destroy_stack(Stack *stack)
 {
     if (stack->item != NULL)
     {
@@ -89,54 +100,3 @@ void destroy_Stack(Stack *stack)
     stack->top = -1;
     stack->size = 0;
 }
-
-/*
-int main() 
-{
-    Stack *s1;
-    s1 = create_Stack(3);
-
-    if (s1 == NULL)
-    {
-        return INT_MIN;
-    }
-    
-    printf("1. Push\n");
-    printf("2. Pop\n");
-    printf("3. Exit\n");
-    int choice, value;
-    
-    while (true)
-    {
-        printf("Enter choice: ");
-        scanf("%d", &choice);
-        printf("Size of Stack: %d\n", size(s1));
-
-        switch (choice)
-	{
-            case 1: 
-                printf("Enter value: ");
-                scanf("%d", &value);
-                push(s1, value); 
-                break;
-
-            case 2:
-                value = pop(s1);
-                if (isUnderflow(s1) == false)
-		{
-                    printf("Popped data: %d\n", value);
-                }    
-                break;
-
-            case 3:
-	        destroy_Stack(s1);
-                exit(0);
-
-            default:
-                printf("Invalid choice\n");
-        }
-    }
-    
-    return 0;
-}
-*/

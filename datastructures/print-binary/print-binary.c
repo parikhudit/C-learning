@@ -1,14 +1,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "dynamic-stack/dynamic-stack.h"
+#include "../dynamic-stack/dynamic-stack.h"
 
 void printBinary(unsigned int);
 
 void printBinary(unsigned int n)
 {
     Stack *s;
-    s = create_Stack(10);
+    s = create_stack(10);
     if (s == NULL)
     {
         printf("Failed to create stack\n");
@@ -27,7 +27,7 @@ void printBinary(unsigned int n)
     {
         printf("%d", pop(s));
     }
-    destroy_Stack(s);
+    destroy_stack(s);
     printf("\n");
     
 }

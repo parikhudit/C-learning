@@ -1,3 +1,5 @@
+#include<stdbool.h>
+
 typedef struct
 {
     int *item;
@@ -7,7 +9,7 @@ typedef struct
 
 Stack *create_stack(int size);
 
-void push(Stack *stack, int value);
+int push(Stack *stack, int value);
 
 int pop(Stack *stack);
 
@@ -15,6 +17,8 @@ void destroy_stack(Stack *stack);
 
 int size(Stack *stack);
 
-int isOverflow(Stack *stack);
+bool isOverflow(Stack *stack);
 
-int isUnderflow(Stack *stack);
+bool isUnderflow(Stack *stack);
+
+int stackTop(Stack *stack);

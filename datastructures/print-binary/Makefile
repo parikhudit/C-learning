@@ -1,26 +1,8 @@
-IDIR =../include
 CC=gcc
-CFLAGS=-I$(IDIR)
+CFLAGS=-I../dynamic-stack/
 
-ODIR=obj
-LDIR =../lib
-
-LIBS=-lm
-
-_DEPS = hellomake.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
-
-_OBJ = hellomake.o hellofunc.o 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
-
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-hellomake: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
-
-.PHONY: clean
+print-binary:
+	$(CC) -o print-binary print-binary.c ../dynamic-stack/dynamic-stack.c
 
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm -f print-binary
